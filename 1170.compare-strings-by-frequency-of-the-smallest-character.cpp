@@ -54,6 +54,7 @@
 #include<vector>
 #include<map>
 #include<string>
+#include<iostream>
 using namespace std;
 // @lc code=start
 class Solution {
@@ -61,39 +62,38 @@ public:
     vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
         int num_words = words.size();
         int num_queries = queries.size();
-        vector<int> word_scores(num_words);
+        vector<int> score_to_result(12);
         vector<int> result(num_queries);
-        map<int, int> cache;
+
         for (int w = 0; w < num_words; w++) {
-            word_scores[w] = calcScore(words[w]);
+            int word_score = calcScore(words[w]);
+            score_to_result[word_score]++;
         }
+        // this is a clever solution i adopted from the discussions
+        // using the fact that 1 <= word <= 10.
+        // buckets are always prevalent
+        for (int i = 10; i > 0; i--) {
+            score_to_result[i] += score_to_result[i + 1];
+        }
+        cout << endl;
         for (int q = 0; q < num_queries; q++) {
-            int score = calcScore(queries[q]);
-            if (cache.find(score) != cache.end()) {
-                result[q] = cache[score];
-            } else {
-                for (int w = 0; w < num_words; w++) {
-                    if (score < word_scores[w]) {
-                        result[q]++;
-                    }
-                }
-                cache[score] = result[q];
-            }
+            int query_score = calcScore(queries[q]);
+            cout << query_score << endl;
+            result[q] = score_to_result[query_score + 1];
         }
         return result;
     }
     int calcScore(string &word) {
-        char min_char = 'z' + 1;
-        int score = 0;
+        vector<int> chars(26);
         for (auto &c : word) {
-            if (c < min_char) {
-                min_char = c;
-                score = 1;
-            } else if (c == min_char) {
-                score++;
+            chars[c - 'a']++;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (chars[i] != 0) {
+                return chars[i];
             }
         }
-        return score;
+        return 0;
     }
 };
 // @lc code=end
