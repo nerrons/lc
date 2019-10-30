@@ -62,12 +62,27 @@
 #include<map>
 #include<string>
 #include<iostream>
+#include<numeric>
 using namespace std;
 // @lc code=start
 class Solution {
 public:
     bool canThreePartsEqualSum(vector<int>& A) {
-        
+        int sum = accumulate(A.begin(), A.end(), 0);
+        if (sum % 3 != 0) return false;
+        int target = sum / 3;
+        int n = A.size();
+        vector<int> partial_sum(2);
+
+        int i = 0;
+        for (int part = 0; part < 2; part++) {
+            while (partial_sum[part] != target && i < n) {
+                partial_sum[part] += A[i];
+                i++;
+            }
+            if (partial_sum[part] != target) return false;
+        }
+        return true;
     }
 };
 // @lc code=end
