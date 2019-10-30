@@ -68,10 +68,12 @@ public:
             if (arr[i] == 0) zeros++;
         }
         if (zeros == 0) return;
-        int j = n + zeros; // this is offset by the first j--
+        int j = n - 1 + zeros;
         // might be easier to understand if visualize
+        // it's like writing the new array to a black hole following
+        // the old array -- all the values past the last element
+        // will be written to the void
         for (int i = n - 1; i >= 0; i--) {
-            j--;
             if (j < n) {
                 arr[j] = arr[i];
             }
@@ -81,6 +83,7 @@ public:
                     arr[j] = 0;
                 }
             }
+            j--;
         }
     }
 };
