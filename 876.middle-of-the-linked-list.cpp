@@ -54,9 +54,6 @@
  * 
  * 
  */
-
-// @lc code=start
-
 #include<vector>
 #include<map>
 #include<string>
@@ -65,12 +62,13 @@
 #include<cmath>
 #include<unordered_map>
 using namespace std;
-// struct ListNode {
-//     int val;
-//     ListNode *next;
-//     ListNode(int x) : val(x), next(nullptr) {}
-// };
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
 
+// @lc code=start
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
@@ -81,7 +79,6 @@ public:
             fast = fast->next->next;
         }
         return slow;
-    }
     }
 };
 // @lc code=end

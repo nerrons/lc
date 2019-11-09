@@ -2,6 +2,11 @@
     "files.associations": {
         "iosfwd": "cpp",
         "vector": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "algorithm": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp"
     }
 }
